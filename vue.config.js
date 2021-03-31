@@ -1,6 +1,32 @@
 const path = require('path');
 module.exports = {
+  //基本路径
+  publicPath: process.env.NODE_ENV === 'production' ? '' : '/',
+  //输出文件目录
+  outputDir: process.env.NODE_ENV === 'production' ? 'dist' : 'devdist',
+  //规范
   lintOnSave: false,
+
+  //webpack-dev-server相关配置
+  devServer:{
+    open: false,//编译完成是否打开网页
+    host: '0.0.0.0',
+    port: 8080,
+    https: false,//编译失败时刷新页面
+    hot: true,//热加载
+    hotOnly: false,
+    proxy:{//配置代理
+      '/devApi':{
+        target: 'http://www.web-jshtml.cn/productapi',
+        changeOrigin: true,
+        pathRewrite:{
+          '^/devApi':''
+        }
+      }
+    }
+  },
+
+  //css相关配置
   css:{
     loaderOptions:{
       sass:{
@@ -21,5 +47,7 @@ module.exports = {
         // 'data':path.resolve(__dirname,'./src/data'),
       }
     }
-  }
+  },
+
+
 }

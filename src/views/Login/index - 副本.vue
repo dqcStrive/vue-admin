@@ -28,12 +28,12 @@
           <label for="">验证码</label>
           <el-row :gutter="11">
             <el-col :span="14"> <el-input type="text" v-model="ruleForm.code" autocomplete="off" minlength="6" maxlength="6"></el-input></el-col>
-            <el-col :span="10"><el-button type="success" class="block" @click="getSms">获取验证码</el-button></el-col>
+            <el-col :span="10"><el-button type="success" class="block">获取验证码</el-button></el-col>
           </el-row>  
         </el-form-item>
 
         <el-form-item>
-          <el-button type="danger" @click="submitForm('ruleForm')" class="login-btn block" :disabled="loginButtonStatus">{{model === 'login' ? '登录' : '注册'}}</el-button>
+          <el-button type="danger" @click="submitForm('ruleForm')" class="login-btn block">提交</el-button>
         </el-form-item>
 
       </el-form>
@@ -43,27 +43,14 @@
 </template>
 
 <script>
-import {GetSms} from '@/api/login'
 import {stripscript,validataEmail,validataPassword,validataCode} from '@/utils/validata';
-import {reactive,ref,isRef,toRefs, onMounted} from '@vue/composition-api'
 export default {
-  name: 'login',
-  // setup(props, context){
-  setup(props, {refs,root}){
-
-    //这里面放置data数据，生命周期，自定义的函数
-    // context.attrs
-    // context.slots 
-    // context.parent
-    // context.root
-    // context.emit
-    //context.refs
-
+  data() {
     //验证验证码
-    let code = (rule, value, callback) => {
+    var code = (rule, value, callback) => {
         //过滤后数据
-        ruleForm.code = stripscript(value);
-        value = ruleForm.code;
+        this.ruleForm.code = stripscript(value);
+        value = this.ruleForm.code;
 
         if (value === '') {
           return callback(new Error('验证码不能为空'));
@@ -75,7 +62,7 @@ export default {
 
       };
       //验证用户名
-      let userName = (rule, value, callback) => {
+      var userName = (rule, value, callback) => {
        
         if (value === '') {
           callback(new Error('请输入用户名'));
@@ -86,10 +73,10 @@ export default {
         }
       };
       //验证密码
-      let passWord = (rule, value, callback) => {
+      var passWord = (rule, value, callback) => {
         //过滤后数据
-        ruleForm.passWord = stripscript(value);
-        value = ruleForm.passWord;
+        this.ruleForm.passWord = stripscript(value);
+        value = this.ruleForm.passWord;
 
         if (value === '') {
           callback(new Error('请输入密码'));
@@ -101,85 +88,63 @@ export default {
       };
 
       //验证重复密码
-      let passWords = (rule, value, callback) => {
+      var passWords = (rule, value, callback) => {
         //如果模块值为login，直接通过
-        if(model.value === 'login'){callback()}
+        if(this.model === 'login'){callback()}
 
         //过滤后数据
-        ruleForm.passWords = stripscript(value);
-        value = ruleForm.passWords;
+        this.ruleForm.passWords = stripscript(value);
+        value = this.ruleForm.passWords;
 
         if (value === '') {
           callback(new Error('请再次密码'));
-        } else if (value != ruleForm.passWord ) {
+        } else if (value != this.ruleForm.passWord ) {
           callback(new Error('重复密码不正确'));
           
         } else {
           callback();
         }
       };
-
-
-  /**
-   * 声明引用类型数据
-   */
-    const menuTab = reactive([
-      {text: "登录",current: true,type: 'login'},
-      {text: "注册",current: false,type: 'register'},
-    ])
-    //表单绑定数据
-    const ruleForm = reactive({
-      userName: "",
-      passWord: "",
-      passWords: "",
-      code: "",
-    })
-    const rules = reactive({
+    return {
+      menuTab: [
+        {
+          text: "登录",
+          current: true,
+          type: 'login'
+        },
+        {
+          text: "注册",
+          current: false,
+          type: 'register'
+        },
+      ],
+      isActive: true,
+      //模块值
+      model:'login',
+      ruleForm: {
+        userName: "",
+        passWord: "",
+        passWords: "",
+        code: "",
+      },
+      rules: {
         userName: [{ validator: userName, trigger: "blur" }],
         passWord: [{ validator: passWord, trigger: "blur" }],
         passWords: [{ validator: passWords, trigger: "blur" }],
         code: [{ validator: code, trigger: "blur" }],
-    })
-
-    /**
-     * 声明基础数据
-     */
-    //取值 model.value
-    //模块值
-    const model = ref('login');
-    const isActive = ref(true);
-    const loginButtonStatus = ref(true);
-    
-    //判断数据类型
-    // console.log(isRef(model) ? '是基础数据类型':'是对象类型');
-
-    //将对象转为基础数据
-    // const obj = reactive({
-    //   x:0,
-    //   y:1
-    // })
-    // const aa = toRefs(obj)
-    // console.log(aa.x);
-
-    /**
-     * 声明函数
-     */
-
-    const toggleMenu = (data => {
-      // console.log(data);
-      menuTab.forEach((elem) => {
+      },
+    };
+  },
+  methods: {
+    toggleMenu(data) {
+      this.menuTab.forEach((elem) => {
         elem.current = false;
-       });
-        data.current = true;
-        model.value = data.type;
-    })
-
-     /**
-     * 提交表单
-     */
-    const submitForm = (formName => {
-      
-      refs[formName].validate((valid) => {
+      });
+      data.current = true;
+      this.model = data.type;
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           alert("submit!");
         } else {
@@ -187,68 +152,10 @@ export default {
           return false;
         }
       });
-    }) 
+    },
 
-      /**
-       * 获取验证码
-       */
-      const getSms = (() => {
-        //判断邮箱。密码不能为空
-        if(ruleForm.userName == ''){
-          root.$message.error({
-            showClose: true,
-            message: '邮箱不能为空!!!',
-            type: 'error'
-          });
-          return false
-        }
-
-        if(validataEmail(ruleForm.userName)){
-          root.$message.error({
-            showClose: true,
-            message: '邮箱格式有误!!!',
-            type: 'error'
-          });
-          return false
-        }
-
-        let data = {
-          username: ruleForm.userName,
-          module: 'login'
-        }
-        
-         GetSms(data).then(res => {
-
-         }).catch(err => {
-           console.log(err);
-         })
-      })
-
-
-    /**
-     * 获取验证码
-     */
-
-    /*
-    *生命周期
-    */
-    //挂载完成后
-    onMounted(()=>{
-    })
-   
-    return{
-      menuTab,
-      model,
-      toggleMenu,
-      submitForm,
-      ruleForm,
-      rules,
-      isActive,
-      getSms,
-      loginButtonStatus
-    }
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
