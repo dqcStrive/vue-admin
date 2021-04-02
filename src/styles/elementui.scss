@@ -1,0 +1,24 @@
+.el-submenu {
+  &.is-active{
+     .el-submenu__title{
+      background-color: rgba(158, 74, 74, 1)!important;
+    }
+  }
+  .el-menu-item {
+    font-size: 14px;
+    padding-left: 50px !important;
+    background-color: #344a5f;
+    &.is-active {
+      background-color: rgba(158, 74, 74, 1) !important;
+    }
+  }
+
+}
+
+
+
+.el-menu--vertical {
+  .el-menu-item:hover {
+    background-color: red;
+  }
+}
