@@ -1,5 +1,10 @@
 import { GetCategory } from "../../api/news"
-
+const state = {
+  QiniuUrl: 'http://qr508a92l.hn-bkt.clouddn.com/'
+}
+const getters = {
+  QiniuUrl: state => state.QiniuUrl
+}
 
 const actions = {
   getInfoCategory(content,requestData){
@@ -15,5 +20,7 @@ const actions = {
 
 export default{
   namespaced: true,
-  actions
+  actions,
+  state,
+  getters
 }

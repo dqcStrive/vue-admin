@@ -125,7 +125,6 @@ export default {
         imgUrl: "http://163",
         updateDate: new Date(),
       };
-      console.log();
       if (form.category === '') {
         root.$message({
           message: "分类不能为空",
