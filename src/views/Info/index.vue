@@ -76,7 +76,7 @@
     <div class="black-space-30"></div>
     <el-table :data="table_data.item" border style="width: 100%" v-loading="loadingData" @selection-change="handleSelectTionChange">
       <el-table-column type="selection" width="45"></el-table-column>
-      <el-table-column prop="title" label="标题" width="830"> </el-table-column>
+      <el-table-column prop="title" label="标题" width="750"> </el-table-column>
       <el-table-column prop="categoryId" label="类型" width="127" :formatter="tocategory">
       </el-table-column>
       <el-table-column prop="createDate" label="日期" width="140" :formatter="toDate">
@@ -90,6 +90,9 @@
           >
           <el-button type="success" size="mini" @click="editInfo(scope.row.id)"
             >编辑</el-button
+          >
+          <el-button type="success" size="mini" @click="editInfo(scope.row.id)"
+            >编辑详情</el-button
           >
         </template>
       </el-table-column>
