@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {Message} from 'element-ui'
+import {getToken,getUserName} from './app'
 
 //创建axios，赋值geiservice
 //手把手前端地址http://www.web-jshtml.cn/productApi
@@ -16,9 +17,8 @@ service.interceptors.request.use(function(config){
   //Tokey
   //userId
   //sui
-  config.headers['Tokey'] = '111'
-  config.headers['userId'] = '444'
-  config.headers['sui'] = '333'
+  config.headers['Tokey'] = getToken()
+  config.headers['UserName'] = getUserName()
   return config;
 },function(error){
     //对请求错误做些什么

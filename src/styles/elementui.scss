@@ -1,24 +1,54 @@
-.el-submenu {
-  &.is-active{
-     .el-submenu__title{
-      background-color: rgba(158, 74, 74, 1)!important;
-    }
-  }
-  .el-menu-item {
+#nav-wrap{
+  .el-submenu .el-menu-item {
     font-size: 14px;
     padding-left: 50px !important;
-    background-color: #344a5f;
-    &.is-active {
-      background-color: rgba(158, 74, 74, 1) !important;
-    }
+    &.is-active { background-color: rgba(245, 108, 108, 0.2) !important; }
   }
-
+  
+  li.el-submenu {
+    &.is-active.is-opened .el-submenu__title { background-color: $mainCcolor !important; }
+  }
 }
 
+// table样式
+#info-wrap{
+  div.el-table{
+    td,th{
+      text-align: center;
+    }
+    th{
+      font-weight: bold;
+      color: #344a5f;
+    }
+    td{
+      font-size: 14px;
+    }
+    th >.cell{
+      padding: 0;
+    }
+  }
+}
+
+/*dialog样式*/
+
+div.el-dialog__body{
+  padding: 30px 47px!important;
+}  
+div.el-dialog__footer{
+  text-align: center!important;
+  padding-bottom: 50px !important;
+  .el-button{
+    width: 150px;
+    margin: 0 11px;
+  }
+}
+
+div.el-form-item{margin-bottom: 22px;}
 
 
-.el-menu--vertical {
-  .el-menu-item:hover {
-    background-color: red;
+/*from样式*/
+.el-form{
+  .el-form-item:last-child {
+    margin-bottom: 0 !important;
   }
 }

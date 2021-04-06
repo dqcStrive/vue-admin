@@ -59,16 +59,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../styles/config.scss';
-.logo{
-  // text-align: center;
-  img{
-    margin-left: 50%;
-    transform: translateX(-50%);
-    width: 92px;
-  @include webkit(transition,all .5s ease 0s);
-
-  }
-}
 #nav-wrap {
   position: fixed;
   top: 0;
@@ -80,21 +70,31 @@ export default {
   @include webkit(transition,all .3s ease 0s);
   svg{
     font-size: 20px;
-    margin-right: 30px;
+    margin-right: 25px;
+  }
+  .logo{
+    // text-align: center;
+    img{
+      margin-left: 50%;
+      transform: translateX(-50%);
+      width: 92px;
+      @include webkit(transition,all .5s ease 0s);
+    }
+  }
+  .open{
+    #nav-wrap{
+      width: $navMenu;
+    }
+  }
+  .close{
+    #nav-wrap{
+      width: $navMenuMin;
+    }
+    .logo img{
+      // margin: auto;
+      width: 70%;
+    }
   }
 }
-.open{
-  #nav-wrap{
-    width: $navMenu;
-  }
-}
-.close{
-  #nav-wrap{
-    width: $navMenuMin;
-  }
-  .logo img{
-    // margin: auto;
-    width: 70%;
-  }
-}
+
 </style>
