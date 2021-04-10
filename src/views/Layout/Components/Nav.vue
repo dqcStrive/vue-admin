@@ -57,7 +57,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../../../styles/config.scss';
 #nav-wrap {
   position: fixed;
@@ -66,7 +66,6 @@ export default {
   width: $navMenu;
   height: 100vh;
   background-color: #344a5f;
-  
   @include webkit(transition,all .3s ease 0s);
   svg{
     font-size: 20px;
@@ -81,6 +80,7 @@ export default {
       @include webkit(transition,all .5s ease 0s);
     }
   }
+}
   .open{
     #nav-wrap{
       width: $navMenu;
@@ -90,11 +90,12 @@ export default {
     #nav-wrap{
       width: $navMenuMin;
     }
-    .logo img{
-      // margin: auto;
-      width: 70%;
+    h1.logo {
+      img{
+        // margin: auto;
+        width: 70%;
+      }
     }
   }
-}
 
 </style>
