@@ -30,3 +30,24 @@ export function QiniuToken(data){
       data
     })
 }
+
+/**获取用户信息 */
+export function LoadTableData(params){
+  return service.request({
+    method: params.method || 'post',
+    url: params.url,
+    data:params.data
+  })
+}
+
+/**
+ * 获取city
+ */
+
+ export function GetCityPicker(data){
+  return service.request({
+    method: 'post',
+    url: '/cityPicker/',
+    data
+  })
+}

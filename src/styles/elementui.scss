@@ -6,28 +6,27 @@
   }
   
   li.el-submenu {
-    &.is-active.is-opened .el-submenu__title { background-color: $mainCcolor !important; }
+    &.is-active.is-opened .el-submenu__title { background-color: $mainCcolor !important;}
   }
 }
 
 // table样式
-#info-wrap{
-  div.el-table{
-    td,th{
-      text-align: center;
-    }
-    th{
-      font-weight: bold;
-      color: #344a5f;
-    }
-    td{
-      font-size: 14px;
-    }
-    th >.cell{
-      padding: 0;
-    }
+div.el-table{
+  td,th{
+    text-align: center;
+  }
+  th{
+    font-weight: bold;
+    color: #344a5f;
+  }
+  td{
+    font-size: 14px;
+  }
+  th >.cell{
+    padding: 0;
   }
 }
+
 
 /*dialog样式*/
 

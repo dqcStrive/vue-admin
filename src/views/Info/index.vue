@@ -41,14 +41,15 @@
         <div class="label-wrap key-work">
           <label for="">关键字：</label>
           <div class="warp-content">
-            <el-select v-model="select_key" style="width: 100%">
+            <!-- <el-select v-model="select_key" style="width: 100%">
               <el-option
                 v-for="item in search_option"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
               ></el-option>
-            </el-select>
+            </el-select> -->
+            <SelectVue :config="data.configOption" style="width: 100%"></SelectVue>
           </div>
         </div>
       </el-col>
@@ -95,7 +96,6 @@
             <el-button type="success" size="mini">编辑详情</el-button>
           </router-link> -->
             <el-button type="success" size="mini" @click="detailed(scope.row)">编辑详情</el-button>
-          
         </template>
       </el-table-column>
     </el-table>
@@ -142,11 +142,17 @@ import DialogEditInfo from "./dialog/edit";
 import { global } from "@/utils/global";
 import { GetList,DeleteInfo } from "@/api/news";
 import { formatDate } from '@/utils/common';
+import SelectVue from '@c/Select'
 
 export default {
   name: "Info",
-  components: { DialogInfo,DialogEditInfo },
+  components: { DialogInfo,DialogEditInfo,SelectVue },
   setup(props, { root }) {
+    const data = reactive({
+      configOption: {
+        init:['id','title'],
+      }
+    })
     const { confirm } = global();
 
     /**定义数据 */
@@ -280,8 +286,10 @@ export default {
 
       let categoryData = options.category.filter(item => {
         return item.id == category
-      })[0]
-        return categoryData.category_name
+      })
+      if(categoryData.length == 0)return false
+
+        return categoryData[0].category_name
     }
 
     const editInfo = (id) => {
@@ -350,7 +358,8 @@ export default {
       dialog_info_edit,
       editInfo,
       infoId,
-      detailed
+      detailed,
+      data
     };
   },
 };
