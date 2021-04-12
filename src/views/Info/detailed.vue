@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { ref,reactive,onMounted } from '@vue/composition-api';
+import { ref,reactive,onMounted, onActivated } from '@vue/composition-api';
 import { GetList, EditInfo } from '@/api/news';
 import { formatDate } from '@/utils/common';
 import  Uploading from '@c/Uploading'
@@ -136,9 +136,14 @@ export default {
     onMounted(()=>{
       //获取信息分类
       getInfoCategory()
-      //获取当前id信息
-      getInfo()
 
+
+    })
+
+    onActivated(() => {
+      //获取当前id信息
+      getInfo(),
+      data.id = root.$route.params.id || root.$store.getters['infoDetailed/infoId']
     })
 
 

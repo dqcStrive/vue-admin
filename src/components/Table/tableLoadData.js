@@ -21,7 +21,6 @@ export function LoadData() {
       method: requestJson.method,
       data: requestJson.data
     }
-    console.log(requestData);
 
     LoadTableData(requestData).then(res => {
       let responseData = res.data.data.data;

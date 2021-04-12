@@ -67,9 +67,7 @@
         &nbsp;
       </el-col> -->
       <el-col :span="2" :offset="3">
-        <el-button type="danger" style="width: 100%" @click="dialog_info = true"
-          >新增</el-button
-        >
+        <el-button type="danger" style="width: 100%" @click="dialog_info = true" v-if="btnPerm('info:add')">新增</el-button>
       </el-col>
     </el-row>
 
@@ -86,16 +84,9 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="danger" size="mini" @click="deleteItem(scope.row.id)"
-            >删除</el-button
-          >
-          <el-button type="success" size="mini" @click="editInfo(scope.row.id)"
-            >编辑</el-button
-          >
-          <!-- <router-link :to="{name: 'InfoDetailed',query:{id:scope.row.id}}" class="margin-left-10">
-            <el-button type="success" size="mini">编辑详情</el-button>
-          </router-link> -->
-            <el-button type="success" size="mini" @click="detailed(scope.row)">编辑详情</el-button>
+          <el-button type="danger" size="mini" @click="deleteItem(scope.row.id)" v-btnPerm="'info:del'" class="hiden-button">删除</el-button >
+          <el-button type="success" size="mini" @click="editInfo(scope.row.id)" v-btnPerm="'info:edit'" class="hiden-button">编辑</el-button>
+            <el-button type="success" size="mini" @click="detailed(scope.row)" v-btnPerm="'info:detailed'" class="hiden-button">编辑详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -380,4 +371,8 @@ export default {
     }
   }
 }
+</style>
+<style>
+button.hiden-button { display: none; }
+button.show-button { display: inline-block; }
 </style>

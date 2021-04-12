@@ -129,15 +129,7 @@ export default {
 
     //带参数刷新数据
     const paramsLoadData = (params) => {
-      // let requestData = Object.assign({},params,{
-      //   pageNumber: 1,
-      //   pageSize:10,
-      // })
-      // data.tableConfig.requestData.data = requestData
-      // console.log(data.tableConfig.requestData);
-      // console.log(params);
       tableLoadData(params)
-      // console.log(tableData);
     }
 
 

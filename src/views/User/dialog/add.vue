@@ -34,11 +34,25 @@
           <el-radio v-model="data.form.status" label="2">启用</el-radio> 
         </el-form-item>
 
-        <el-form-item label="角色" :label-width="formLabelWidth" prop="role">
+        <el-form-item label="角色：" :label-width="formLabelWidth" prop="role">
           <el-checkbox-group v-model="data.form.role">
             <el-checkbox v-for="item in data.roleItem" :key="item.role" :label="item.role">{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
+
+       <el-form-item label="按钮：" :label-width="data.formLabelWidth">
+          <template v-if="data.btnPerm.length > 0">
+              <div v-for="item in data.btnPerm" :key="item.name">
+                  <h4>{{ item.name }}</h4>
+                  <template v-if="item.perm && item.perm.length > 0">
+                      <el-checkbox-group v-model="data.form.btnPerm">
+                          <el-checkbox v-for="buttons in item.perm" :key="buttons.value" :label="buttons.value">{{ buttons.name }}</el-checkbox>
+                      </el-checkbox-group>
+                  </template>
+              </div>
+          </template>
+        </el-form-item>
+
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -55,7 +69,7 @@
 import sha1  from 'js-sha1';
 import { reactive, ref, watch } from "@vue/composition-api";
 import CityPicker from '@c/CityPicker';
-import { GetRole, AddUser,UserEdit } from '@/api/user';
+import { GetSystem, AddUser,UserEdit,GetPermButton } from '@/api/user';
 import { stripscript, validatePass, validateEmail } from '@/utils/validata';
 export default {
   name: "Info_dialog",
@@ -115,6 +129,7 @@ export default {
       //城市数据
       cityPickerData:{},
       roleItem: [],
+      btnPerm: [],
       form:{
         username: '',
         password: '',
@@ -122,7 +137,8 @@ export default {
         phone: '',
         region: '',
         status: '1',
-        role: []
+        role: [],
+        btnPerm: [],
       },
        // 表单的验证
       rules:reactive({
@@ -160,7 +176,8 @@ export default {
           //数据处理   
           let requestData = Object.assign({},data.form);
 
-          requestData.role = requestData.role.join('');
+          requestData.role = requestData.role.join();
+          requestData.btnPerm = requestData.btnPerm.join()
           requestData.region = JSON.stringify(data.cityPickerData);
 
           if(requestData.id){
@@ -209,29 +226,32 @@ export default {
     //弹窗打开，动画结束时
     const openDialog = () => {
       //角色请求
-      getRole()
+      getSystem()
       //初始值处理
      
       let editData = props.editData;
       if(editData.id){//编辑
-        editData.role = editData.role.split(',');
-        console.log(111);
-      }else{
-        console.log(222);
+        editData.role = editData.role ? editData.role.split(',') : [];
+        editData.btnPerm = editData.btnPerm ? editData.btnPerm.split(',') : [];
+        // 循环JSON对象
+        for(let key in editData){
+          data.form[key] =  editData[key] 
+        }
+      }else{//添加
         data.form.id && delete data.form.id
       }
-      // 循环JSON对象
-      for(let key in editData){
-        data.form[key] = editData.id ? editData[key] : '';
-      }
-      console.log(data.form);
+
     };
 
 
     /**请求角色 */
-    const getRole = () => { 
-      GetRole().then(res => {
+    const getSystem = () => { 
+      if(data.roleItem.length > 0 && data.btnPerm.length > 0) {return false}
+      GetSystem().then(res => {
         data.roleItem = res.data.data
+      })
+      GetPermButton().then(res => {
+        data.btnPerm = res.data.data
       })
     }
 

@@ -1,13 +1,17 @@
-import { Login } from "@/api/login";
+import { Login,Logout } from "@/api/login";
 import { setToken,removeToken,removeUserName, setUserName,getUserName} from '@/utils/app'
-
 
 const state ={
   isCollapse: JSON.parse(sessionStorage.getItem('isCollapse')) || false,
   to_ken: '',
-  username: getUserName() || ''
+  username: getUserName() || '',
+  roles:[],
+  buttonPermission: [],
 }
 const getters = {
+  isCollapse: state => state.isCollapse,
+  roles: state => state.roles,
+  buttonPermission: state => state.buttonPermission
 }
 const mutations={
   SET_COLLAPSE(state) {
@@ -19,6 +23,13 @@ const mutations={
   },
   SET_USERNAME(state,value){
     state.username = value;
+  },
+  SET_ROLES(state, value){
+    state.roles = value;
+  },
+  SET_BUTTON(state, value){
+      state.buttonPermission = value;
+      
   }
 }
 
@@ -32,6 +43,7 @@ const actions = {
         //token,username
         content.commit('SET_TOKEN',data.token);
         content.commit('SET_USERNAME',data.username);
+        content.commit('SET_ROLES', []);
         setToken(data.token);
         setUserName(data.username);
 
@@ -42,14 +54,18 @@ const actions = {
       })
     })
   },
-  exit({commit}){
+  logout({commit}){
    
     return new Promise((resolve,reject) => {
-      removeToken();
-      removeUserName();
-      commit('SET_TOKEN','');
-      commit('SET_USERNAME','');
-      resolve();
+      Logout().then(res => {
+        let data = res.data
+        removeToken();
+        removeUserName();
+        commit('SET_TOKEN','');
+        commit('SET_USERNAME','');
+        resolve(data);
+      })
+
     })
   }
 }

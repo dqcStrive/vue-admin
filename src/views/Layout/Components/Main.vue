@@ -3,9 +3,9 @@
         <div class="main-content">
             <div class="content">
                 <!-- 子路由显示区 -->
-                <keep-alive>
+                <keep-alive include="Info">
                     <!-- 需要缓存 -->
-                <router-view v-if="$route.meta.keepAlive" />
+                  <router-view v-if="$route.meta.keepAlive" />
                 </keep-alive>
                 <!-- 不需要缓存 -->
                 <router-view v-if="!$route.meta.keepAlive"/>
@@ -36,7 +36,7 @@ export default {
 }
 .main-content {
   width: 100%;
-  height: 100%;
+  // height: 100%;
   padding-top: $layoutHeader + 30;
   padding-right: 30px;
   @include webkit(box-sizing,border-box);
@@ -51,7 +51,7 @@ export default {
 .content {
     width: 100%;
     height: 100%;
-    padding: 30px 30px 0 30px;
+    padding: 30px 30px 30px 30px;
     background-color: #fff;
     @include webkit(box-sizing,border-box);
 }

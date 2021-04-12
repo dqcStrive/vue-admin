@@ -8,7 +8,7 @@
         <img src="../../../assets/images/face.jpg" alt="">
         {{username}}
       </div>
-      <div class="header-icon pull-left" @click="exit">
+      <div class="header-icon pull-left" @click="logout">
         <svg-icon iconClass="exit" className="exit"></svg-icon>
       </div>
     </div>
@@ -29,14 +29,16 @@ export default {
     }
 
     //退出
-    const exit = () => {
+    const logout = () => {
       root.$confirm('推出页面, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
-        }).then(() => {
-          root.$store.dispatch('app/exit').then(res => {
-            root.$router.push({name: 'Login'})
+        }).then((res) => {
+          root.$store.dispatch('app/logout').then(res => {
+            if(res.resCode == 0 ){
+              root.$router.push({name: 'Login'})
+            }
           })
         }).catch(() => {});
     }
@@ -44,7 +46,7 @@ export default {
     return{
       navMenuState,
       username,
-      exit
+      logout
     }
   }
 }
