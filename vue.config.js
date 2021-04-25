@@ -68,7 +68,7 @@ module.exports = {
           target: "http://www.web-jshtml.cn/productapi/token", //API服务器的地址
           changeOrigin: true,
           pathRewrite: {
-              "^/devApi": ''
+            "^/devApi": ''
           }
       }
     }

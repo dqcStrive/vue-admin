@@ -123,7 +123,10 @@ export default {
           });
           // refs['addInfoForm'].resetFields();
           submitLoading.value = false;
-          resetForm();
+          //关闭弹窗
+          close();
+          //更新数据
+          emit('getListEmit');
         })
         .catch((err) => {
           submitLoading.value = false;

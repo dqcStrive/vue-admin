@@ -4,7 +4,7 @@ import {getToken,getUserName} from './app'
 
 //创建axios，赋值geiservice
 //手把手前端地址http://www.web-jshtml.cn/productApi
-const BASEURL = process.env.NODE_ENV === 'production' ? '' : '/devApi';
+const BASEURL = process.env.NODE_ENV === 'production' ? process.env.VUE_APP_API : process.env.VUE_APP_API;
 const service = axios.create({
   baseURL: BASEURL,//http://localhost:8080/api/
   timeout: 15000,

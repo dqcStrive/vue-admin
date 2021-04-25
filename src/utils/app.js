@@ -20,7 +20,7 @@ export function setUserName(value){
 }
 
 export function getUserName(){
-  return cookie.get(usernameKey);
+  return cookie.get(usernameKey)
 }
 
 export function removeUserName(){
