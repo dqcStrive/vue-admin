@@ -1,6 +1,6 @@
 import {GetCategory} from '@/api/news';
 import service from "@/utils/request";
-import { reactive } from '_@vue_composition-api@1.0.0-rc.6@@vue/composition-api';
+import { reactive } from '@vue/composition-api';
 export function common(){
   const categoryItem = reactive({
     item:[]
